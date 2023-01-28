@@ -17,6 +17,10 @@ $connection = mysqli_connect($server, $user, $password, $database);
    // echo "Connection successfull ";
  }
 
+//echo "<pre>"; print_r( $_POST ); echo "</pre>";
+//echo "<pre>"; print_r( $_FILES ); echo "</pre>"; ay vabe  value ki ki paya  jai  ta  chak kora  dakhta hobe
+
+
 if(isset($_POST['submit'])){
     $username = isset($_POST['username']) ? $_POST['username'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -32,17 +36,22 @@ if(isset($_POST['submit'])){
     if(!empty($image_name)){
        $loc = "profile_pik/";
        if(move_uploaded_file($image_tmp_name,  $loc.$image_name)){
-        header("location:index.php");
+        
        }
     }else{
         echo "Your file is empty";
     }
 
-$sql_command = "INSERT INTO user_info (id, profile_pik,username, email, password, gander, country) VALUES (NULL, '{$image_name}','{$username}', '{$email}', '{$password}' '{$gander}', '{$country}' )";
+$sql_command = "INSERT INTO user_info ( `profile_pik`, `username`, `email`, `password`, `gander`, `country`) VALUES ( '{$image_name}','{$username}', '{$email}', '{$password}', '{$gander}', '{$country}' )";
 
+//$sql_command = "INSERT INTO `user_info`( `profile_pik`, `username`, `email`, `password`, `gander`, `country`) VALUES ('$image_name','$username','$email','$password','$gander','$country')";
+
+
+
+//echo "<pre>"; print_r( $sql_command  ); echo "</pre>"; sql commden chack kora  dakher  jonno  
 
 if (mysqli_query($connection, $sql_command)) {
-    echo "User created successfully";
+     header("location:index.php");
     }else {
     echo "SQL ERROE" . mysqli_error($connection);
     }
